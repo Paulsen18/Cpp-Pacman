@@ -37,32 +37,29 @@ void GameObject::ChangeAngle(float nAngle) {
 void GameObject::move(char button) {
 	switch (button) {
 	case  'w':
-		for (int i = 0; i < 4;) {
-		ypos -= 8;
+	
+		ypos-=4;
 		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopUp.png");
-		i++;
-		}
+
+		
 		break;
 	case 'a':
-		for (int i = 0; i < 4;) {
-			xpos -= 8;
+		
+			xpos-=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopLeft.png");
-			i++;
-		}	 
+		 
 		break;
 	case 's':
-		for (int i = 0; i < 4;) {
-			ypos += 8;
+		
+			ypos+=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopDown.png");
-			i++;
-		}
+		
+		
 		break;
 	case 'd':
-		for (int i = 0; i < 4;) {
-			xpos += 8;
+		
+			xpos+=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoop.png");
-			i++;
-		}
 		break;
 	case 'o':
 		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetDeath.png");

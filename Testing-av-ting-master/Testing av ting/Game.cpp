@@ -46,7 +46,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 	blinky = new GameObject("assets/BlinkySpriteSheetRight.png", 224, 200,2,100);
 
-	dead = new GameObject("assets/PacmanSpriteSheetDeath.png", 300, 300, 7, 150);
+	dead = new GameObject("assets/PacmanSpriteSheetDeath.png", 300, 300, 6, 150);
 
 	map = new Map();
 
