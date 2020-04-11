@@ -8,6 +8,9 @@
 
 GameObject* player;
 GameObject* blinky;
+GameObject* pinky;
+GameObject* inky;
+GameObject* clyde;
 GameObject* dead;
 Map* map;
 
@@ -42,11 +45,17 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		isRunning = true;
 		}
 		
-	player = new GameObject("assets/PacmanSpriteSheetLoop.png", 448 ,600,6,125);
+	player = new GameObject("assets/PacmanSpriteSheetLoop.png", 448 ,608,6,125);
 
-	blinky = new GameObject("assets/BlinkySpriteSheetRight.png", 224, 200,2,100);
+	blinky = new GameObject("assets/BlinkySpriteSheetRight.png", 32, 32,2,100);
 
-	dead = new GameObject("assets/PacmanSpriteSheetDeath.png", 300, 300, 6, 150);
+	pinky = new GameObject("assets/PinkySpriteSheetRight.png", 704, 832, 2, 100);
+
+	inky = new GameObject("assets/InkySpriteSheetRight.png", 32, 384, 2, 100);
+
+	clyde = new GameObject("assets/ClydeSpriteSheetRight.png", 288, 96, 2, 100);
+
+	dead = new GameObject("assets/PacmanSpriteSheetDeath.png", 100, 100, 6, 150);
 
 	map = new Map();
 
@@ -111,6 +120,13 @@ void Game::update()
 {
 	player->Update();
 	blinky->Update();
+	blinky->blinkyMove();
+	pinky->Update();
+	pinky->pinkyMove();
+	inky->Update();
+	inky->inkyMove();
+	clyde->Update();
+	clyde->clydeMove();
 	dead->Update();
 	
 	
@@ -121,6 +137,9 @@ void Game::render()
 	map->DrawMap();
 	player->Render();
 	blinky->Render();
+	pinky->Render();
+	inky->Render();
+	clyde->Render();
 	dead->Render();
 	SDL_RenderPresent(renderer);
 
