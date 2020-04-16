@@ -7,6 +7,8 @@ public :
 	bool animated = false;
 	int frames = 0;
 	int speed = 100;
+	int distance = 0;
+	char mButton;
 	SDL_Point center = { 8,8 };
 	bool reverse= false;
 	bool collide = false;

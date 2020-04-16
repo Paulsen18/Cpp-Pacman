@@ -42,38 +42,64 @@ void GameObject::move(char button) {
 	collisonCheck();
 	int x = xpos;
 	int y = ypos;
-	std::cout << "x: "<<destRect.x << "y: "<<destRect.y << " w: "<<destRect.w << " h: " << destRect.h << std::endl;
+	int tx = (xpos+16)/32;
+	int ty = (ypos+16)/32;
+	
+	if (distance == 32) {
+		distance = 0;
+	}
+
+	if (button != mButton&&distance>0) {
+		xpos = tx * 32;
+		ypos = ty * 32;
+	}
+
+	
+	
+	
+
+	mButton = button;
+	std::vector<std::vector<int>> map = getMap();
+	std::cout << "x: "<<destRect.x << "y: "<<destRect.y << " w: "<<destRect.w << " h: " << destRect.h << "distance: "<<distance << std::endl;
 	if(!collide){
 	switch (button) {
 	case  'w':
 		
-		ypos-=32;
+		ypos-=4;
 		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopUp.png");
+		distance += 4;
 
 		
 		break;
 	case 'a':
 		
-			xpos-=32;
+			xpos-=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopLeft.png");
+			distance += 4;
 		 
 		break;
 	case 's':
 		
-			ypos+=32;
+			ypos+=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopDown.png");
+			distance += 4;
 		
 		
 		break;
 	case 'd':
 		
-			xpos+=32;
+			xpos+=4;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoop.png");
+			distance += 4;
+
 		break;
 	case 'o':
 		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetDeath.png");
+		xpos = tx * 32;
+		ypos = ty * 32;
 		break;
-	default:
+	default:	
+
 		break;
 	}
 	}
