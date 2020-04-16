@@ -1,7 +1,9 @@
 #include "map.h"
 #include "TextureManager.h"
+#include <vector>
 
-int PacmanMap[31][26]
+
+std::vector<std::vector<int>> PacmanMap =
 {
 	{1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2},
 	{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
@@ -35,6 +37,12 @@ int PacmanMap[31][26]
 	{3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4}
 };
 
+std::vector<std::vector<int>> getMap() {
+	return PacmanMap;
+}
+
+
+
 Map::Map()
 {
 	
@@ -55,7 +63,7 @@ Map::Map()
 	trbCorner = TextureManager::LoadTexture("assets/TopRightBottomCorner.png");
 	allCorner = TextureManager::LoadTexture("assets/AllCorner.png");
 
-	LoadMap(PacmanMap);
+
 	src.x = 0;
 	src.y = 0;
 	src.w = dest.w = 32;
@@ -64,24 +72,15 @@ Map::Map()
 	dest.x = dest.y = 0;
 }
 
-void Map::LoadMap(int arr[31][26])
-{
-	for (int rad = 0; rad < 30; rad++)
-	{
-		for (int kolonne = 0; kolonne < 26; kolonne++) {
-			map[rad][kolonne] = arr[rad][kolonne];
-		}
-	}
-}
 void Map::DrawMap()
 {
 	int type = 0;
-	for (int rad = 0; rad < 30; rad++)
+	for (int i = 0; i < 30; i++)
 	{
-		for (int kolonne = 0; kolonne < 26; kolonne++) {
-			type = map[rad][kolonne];
-			dest.x = kolonne * 32;
-			dest.y = rad * 32;
+		for (int j = 0; j < 26; j++) {
+			type = PacmanMap[i][j];
+			dest.x = j * 32;
+			dest.y = i * 32;
 
 			switch (type)
 			{

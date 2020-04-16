@@ -1,6 +1,8 @@
 #include "GameObject.h"
+#include "map.h"
 #include "TextureManager.h"
 #include <iostream>
+
 
 
 GameObject::GameObject(const char* texturesheet, int x, int y)
@@ -34,31 +36,38 @@ void GameObject::ChangeAngle(float nAngle) {
 	angle += nAngle;
 }
 
+
 void GameObject::move(char button) {
+	collide = false;
+	collisonCheck();
+	int x = xpos;
+	int y = ypos;
+	std::cout << "x: "<<destRect.x << "y: "<<destRect.y << " w: "<<destRect.w << " h: " << destRect.h << std::endl;
+	if(!collide){
 	switch (button) {
 	case  'w':
-	
-		ypos-=4;
+		
+		ypos-=32;
 		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopUp.png");
 
 		
 		break;
 	case 'a':
 		
-			xpos-=4;
+			xpos-=32;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopLeft.png");
 		 
 		break;
 	case 's':
 		
-			ypos+=4;
+			ypos+=32;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoopDown.png");
 		
 		
 		break;
 	case 'd':
 		
-			xpos+=4;
+			xpos+=32;
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoop.png");
 		break;
 	case 'o':
@@ -67,6 +76,31 @@ void GameObject::move(char button) {
 	default:
 		break;
 	}
+	}
+	else if (collide) {
+		switch (button) {
+		case 'w':
+			ypos++;
+			break;
+		case 'a':
+			xpos++;
+			break;
+		case 's':
+			ypos--;
+			break;
+		case'd':
+			xpos--;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	if (collisonCheck()) {
+		xpos = x;
+		ypos = y;
+	}
+
 	if (ypos > 896) {
 		ypos = 896;
 	}
@@ -339,6 +373,42 @@ void GameObject::clydeMove() {
 	}
 }
 
+int GameObject::collisonCheck() {
+
+
+	int x = xpos+31;
+	int y = ypos+31;
+	int fx = xpos / 32;
+	int fy = ypos / 32;
+	int i = x / 32;
+	int j = y / 32;
+	
+	std::vector<std::vector<int>> map = getMap();
+	
+	if (map[j][i]!= 0) {
+		std::cout << map[j][i] << std::endl;
+		return collide = true;
+	}
+	else if (map[fy][fx]!=0) {
+		return collide = true;
+	}
+	else if (map[j][fx]!= 0) {
+		return collide = true;
+	}
+	else if (map[fy][i] != 0) {
+		return collide = true;
+	}
+
+	else if (map[j][i] == 0) {
+		std::cout << map[j][i] << std::endl;
+		return collide = false;
+	}
+	else {
+		return 0;
+	}
+	
+}
+
 int GameObject::getXPos() {
 	return xpos;
 }
@@ -349,10 +419,8 @@ int GameObject::getYPos() {
 
 void GameObject::Update() 
 {
-	//xpos++;
-	//ypos++;
-	srcRect.h = 32;
-	srcRect.w = 32;
+	srcRect.h = 31;
+	srcRect.w = 31;
 	srcRect.x = 0;
 	srcRect.y = 0;
 

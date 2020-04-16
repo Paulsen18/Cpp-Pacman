@@ -71,35 +71,27 @@ void Game::eventHandler()
 		switch (event.key.keysym.sym) {
 		case SDLK_w:
 			player->move('w');
-			blinky->ChangeSprite('w');
 			break;
 		case SDLK_UP:
 			player->move('w');
-			blinky->ChangeSprite('w');
 			break;
 		case SDLK_a:
 			player->move('a');
-			blinky->ChangeSprite('a');
 			break;
 		case SDLK_LEFT:
 			player->move('a');
-			blinky->ChangeSprite('a');
 			break;
 		case SDLK_s:
 			player->move('s');
-			blinky->ChangeSprite('s');
 			break;
 		case SDLK_DOWN:
 			player->move('s');
-			blinky->ChangeSprite('s');
 			break;
 		case SDLK_d:
 			player->move('d');
-			blinky->ChangeSprite('d');
 			break;
 		case SDLK_RIGHT:
 			player->move('d');
-			blinky->ChangeSprite('d');
 			break;
 		case SDLK_o:
 			player->move('o');
@@ -116,6 +108,9 @@ void Game::eventHandler()
 		break;
 	}
 }
+
+
+
 void Game::update()
 {
 	player->Update();

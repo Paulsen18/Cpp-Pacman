@@ -9,6 +9,7 @@ public :
 	int speed = 100;
 	SDL_Point center = { 8,8 };
 	bool reverse= false;
+	bool collide = false;
 	float angle;
 
 	GameObject(const char* texturesheet, int x, int y);
@@ -19,10 +20,12 @@ public :
 	void ChangeAngle(float nAngle);
 	void move(char button);
 	void ChangeSprite(char button);
+	int collisonCheck();
 	void blinkyMove();
 	void pinkyMove();
 	void inkyMove();
 	void clydeMove();
+
 	int getXPos();
 	int getYPos();
 

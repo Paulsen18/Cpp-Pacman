@@ -1,14 +1,16 @@
 #pragma once
 #include "Game.h"
-
+#include <vector>
+std::vector<std::vector<int>> getMap();
 class Map
 {
 public:
 	Map();
 	~Map();
 
-	void LoadMap(int arr[31][26]);
 	void DrawMap();
+
+	
 private:
 
 	SDL_Rect src, dest;
@@ -29,7 +31,5 @@ private:
 	SDL_Texture* tlrCorner;
 	SDL_Texture* trbCorner;
 	SDL_Texture* allCorner;
-
-	int map[31][26];
 
 };
