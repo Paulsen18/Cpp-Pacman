@@ -1,9 +1,12 @@
 #pragma once
 #include "SDL.h"
 #include <stdio.h>
+
 class Game
 {
 public:
+	bool playerDeath;
+
 	Game();
 	~Game();
 

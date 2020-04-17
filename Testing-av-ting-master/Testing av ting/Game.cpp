@@ -11,7 +11,6 @@ GameObject* blinky;
 GameObject* pinky;
 GameObject* inky;
 GameObject* clyde;
-GameObject* dead;
 Map* map;
 
 
@@ -55,8 +54,6 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 
 	clyde = new GameObject("assets/ClydeSpriteSheetRight.png", 288, 96, 2, 100);
 
-	dead = new GameObject("assets/PacmanSpriteSheetDeath.png", 100, 100, 6, 150);
-
 	map = new Map();
 
 	}
@@ -97,9 +94,6 @@ void Game::eventHandler()
 			player->move('o');
 			
 			break;
-		case SDLK_ESCAPE:
-			Game::clean();
-			break;
 		default:
 			break;
 		}
@@ -113,29 +107,35 @@ void Game::eventHandler()
 
 void Game::update()
 {
+	
+	
 	player->Update();
+	blinky->blinkyMove(player->getXPos(),player->getYPos());
 	blinky->Update();
-	blinky->blinkyMove();
+	pinky->pinkyMove(player->getXPos(), player->getYPos());
 	pinky->Update();
-	pinky->pinkyMove();
+	inky->inkyMove(player->getXPos(), player->getYPos());
 	inky->Update();
-	inky->inkyMove();
+	clyde->clydeMove(player->getXPos(), player->getYPos());
 	clyde->Update();
-	clyde->clydeMove();
-	dead->Update();
 	
+	if (player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos())) {
+		Game::clean();
+
+	}
 	
+
 }
 void Game::render() 
 {
+
 	SDL_RenderClear(renderer);
-	map->DrawMap();
+	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit());
 	player->Render();
 	blinky->Render();
 	pinky->Render();
 	inky->Render();
 	clyde->Render();
-	dead->Render();
 	SDL_RenderPresent(renderer);
 
 }

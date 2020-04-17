@@ -1,6 +1,8 @@
 #pragma once
 #include "Game.h"
 
+
+
 class GameObject 
 {
 public :
@@ -12,24 +14,30 @@ public :
 	SDL_Point center = { 8,8 };
 	bool reverse= false;
 	bool collide = false;
+	bool dead;
 	float angle;
+	int mapX;
+	int mapY;
+	bool pelletHit = false;
 
-	GameObject(const char* texturesheet, int x, int y);
 	GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed);
-	GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed,float mAngle);
 	~GameObject();
 
-	void ChangeAngle(float nAngle);
 	void move(char button);
-	void ChangeSprite(char button);
-	int collisonCheck();
-	void blinkyMove();
-	void pinkyMove();
-	void inkyMove();
-	void clydeMove();
+	
+	void blinkyMove(int x,int y);
+	void pinkyMove(int x, int y);
+	void inkyMove(int x, int y);
+	void clydeMove(int x, int y);
 
+	int collisonCheck();
+	
 	int getXPos();
 	int getYPos();
+	int getMapX();
+	int getMapy();
+	bool getPelletHit();
+	bool getDeath(int bx, int by, int px, int py, int ix, int iy, int cx, int cy);
 
 	void Update();
 	void Render();

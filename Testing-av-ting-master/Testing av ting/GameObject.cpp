@@ -5,13 +5,8 @@
 
 
 
-GameObject::GameObject(const char* texturesheet, int x, int y)
-{
+bool dead;
 
-	objTexture = TextureManager::LoadTexture(texturesheet);
-	xpos = x;
-	ypos = y;
-}
 
 GameObject::GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed) {
 	objTexture = TextureManager::LoadTexture(texturesheet);
@@ -22,22 +17,10 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int nFrames, int 
 	animated = true;
 }
 
-GameObject::GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed,float mAngle) {
-	objTexture = TextureManager::LoadTexture(texturesheet);
-	xpos = x;
-	ypos = y;
-	frames = nFrames;
-	speed = mSpeed;
-	animated = true;
-	angle = mAngle;
-}
-
-void GameObject::ChangeAngle(float nAngle) {
-	angle += nAngle;
-}
 
 
 void GameObject::move(char button) {
+	
 	collide = false;
 	collisonCheck();
 	int x = xpos;
@@ -45,6 +28,10 @@ void GameObject::move(char button) {
 	int tx = (xpos+16)/32;
 	int ty = (ypos+16)/32;
 	
+	
+	if (dead) {
+		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetDeath.png");	
+	}
 	if (distance == 32) {
 		distance = 0;
 	}
@@ -53,14 +40,8 @@ void GameObject::move(char button) {
 		xpos = tx * 32;
 		ypos = ty * 32;
 	}
-
-	
-	
-	
-
 	mButton = button;
 	std::vector<std::vector<int>> map = getMap();
-	std::cout << "x: "<<destRect.x << "y: "<<destRect.y << " w: "<<destRect.w << " h: " << destRect.h << "distance: "<<distance << std::endl;
 	if(!collide){
 	switch (button) {
 	case  'w':
@@ -92,11 +73,6 @@ void GameObject::move(char button) {
 			objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetLoop.png");
 			distance += 4;
 
-		break;
-	case 'o':
-		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetDeath.png");
-		xpos = tx * 32;
-		ypos = ty * 32;
 		break;
 	default:	
 
@@ -141,26 +117,11 @@ void GameObject::move(char button) {
 	}
 }
 
-void GameObject::ChangeSprite(char button) {
-	switch (button) {
-	case 'w':
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetUp.png");
-		break;
-	case 'a':
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetLeft.png");
-		break;
-	case 's':
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetDown.png");
-		break;
-	case 'd':
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
-		break;
-	default:
-		break;
-	}
-}
 
-void GameObject::blinkyMove() {
+void GameObject::blinkyMove(int x, int y) {
+	
+	
+
 	if (!reverse && xpos < 768 && ypos==32) {
 		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
 		xpos+=4;
@@ -193,7 +154,7 @@ void GameObject::blinkyMove() {
 		reverse = false;
 	}
 }
-void GameObject::pinkyMove() {
+void GameObject::pinkyMove(int x, int y) {
 	if (!reverse && xpos > 480 && ypos <= 832) {
 		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
 		xpos -= 4;
@@ -270,7 +231,7 @@ void GameObject::pinkyMove() {
 	}
 }
 
-void GameObject::inkyMove() {
+void GameObject::inkyMove(int x, int y) {
 	if (!reverse && xpos == 32 && ypos < 672) {
 		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
 		ypos += 4;
@@ -343,7 +304,9 @@ void GameObject::inkyMove() {
 
 }
 
-void GameObject::clydeMove() {
+void GameObject::clydeMove(int x,int y) {
+
+
 	if (xpos < 704 && ypos == 96) {
 		reverse = false;
 		objTexture = TextureManager::LoadTexture("assets/ClydeSpriteSheetRight.png");
@@ -408,25 +371,35 @@ int GameObject::collisonCheck() {
 	int fy = ypos / 32;
 	int i = x / 32;
 	int j = y / 32;
+	std::cout << xpos << ypos << std::endl;
 	
 	std::vector<std::vector<int>> map = getMap();
-	
-	if (map[j][i]!= 0) {
-		std::cout << map[j][i] << std::endl;
-		return collide = true;
-	}
-	else if (map[fy][fx]!=0) {
-		return collide = true;
-	}
-	else if (map[j][fx]!= 0) {
-		return collide = true;
-	}
-	else if (map[fy][i] != 0) {
-		return collide = true;
-	}
 
+	if (16>map[j][i]&&map[j][i]>0) {
+		return collide = true;
+	}
+	else if (16>map[fy][fx]&&map[fy][fx]>0) {
+		return collide = true;
+
+	}
+	else if (16>map[j][fx]&&map[j][fx]>0) {
+		return collide = true;
+
+	}
+	else if (16>map[fy][i]&&map[fy][i]>0) {
+		return collide = true;
+
+	}
 	else if (map[j][i] == 0) {
-		std::cout << map[j][i] << std::endl;
+		mapX = i;
+		mapY = j;
+		pelletHit = true;
+		return collide = false;
+	
+
+	}
+	else if (map[j][i] == 16) {
+	
 		return collide = false;
 	}
 	else {
@@ -443,8 +416,46 @@ int GameObject::getYPos() {
 	return ypos;
 }
 
+int GameObject::getMapX() {
+	return mapX;
+}
+int GameObject::getMapy() {
+	return mapY;
+}
+bool GameObject::getPelletHit() {
+	return pelletHit;
+}
+
+
+
+bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx, int cy) {
+	dead = false;
+	int x = xpos / 32;
+	int y = ypos /32;
+	int bX = bx / 32;
+	int bY = by / 32;
+	int pX = px / 32;
+	int pY = py / 32;
+	int iX = ix / 32;
+	int iY = iy / 32; 
+	int cX = cx / 32;
+	int cY = cy / 32;
+	
+
+	std::vector<std::vector<int>> map = getMap();
+	if ((y == bY && x == bX)||
+		(y == pY && x == pX)||
+		(y == iY && x == iX)||
+		(y == cY && x == cX)) {
+		dead = true;
+	}
+
+	return dead;
+}
+
 void GameObject::Update() 
-{
+{	
+
 	srcRect.h = 31;
 	srcRect.w = 31;
 	srcRect.x = 0;

@@ -1,6 +1,7 @@
 #include "map.h"
 #include "TextureManager.h"
 #include <vector>
+#include <iostream>
 
 
 std::vector<std::vector<int>> PacmanMap =
@@ -62,6 +63,7 @@ Map::Map()
 	tlrCorner = TextureManager::LoadTexture("assets/TopLeftRightCorner.png");
 	trbCorner = TextureManager::LoadTexture("assets/TopRightBottomCorner.png");
 	allCorner = TextureManager::LoadTexture("assets/AllCorner.png");
+	pellet = TextureManager::LoadTexture("assets/Pellet.png");
 
 
 	src.x = 0;
@@ -72,7 +74,7 @@ Map::Map()
 	dest.x = dest.y = 0;
 }
 
-void Map::DrawMap()
+void Map::DrawMap(int mapX,int mapY, bool pelletHit)
 {
 	int type = 0;
 	for (int i = 0; i < 30; i++)
@@ -81,11 +83,15 @@ void Map::DrawMap()
 			type = PacmanMap[i][j];
 			dest.x = j * 32;
 			dest.y = i * 32;
-
+			if (pelletHit&&i==mapX&&j==mapY) {
+				PacmanMap[mapY][mapX] = 16;
+			}
+			
 			switch (type)
 			{
 			case 0:
 				TextureManager::Draw(blank, src, dest);
+				TextureManager::Draw(pellet, src, dest);
 				break;
 			case 1:
 				TextureManager::Draw(corner1, src, dest);
@@ -131,6 +137,8 @@ void Map::DrawMap()
 				break;
 			case 15:
 				TextureManager::Draw(allCorner, src, dest);
+			case 16:
+				TextureManager::Draw(blank, src, dest);
 
 
 

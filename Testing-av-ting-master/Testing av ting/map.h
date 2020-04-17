@@ -8,7 +8,7 @@ public:
 	Map();
 	~Map();
 
-	void DrawMap();
+	void DrawMap(int mapX, int mapY, bool pelletHit);
 
 	
 private:
@@ -31,5 +31,6 @@ private:
 	SDL_Texture* tlrCorner;
 	SDL_Texture* trbCorner;
 	SDL_Texture* allCorner;
+	SDL_Texture* pellet;
 
 };
