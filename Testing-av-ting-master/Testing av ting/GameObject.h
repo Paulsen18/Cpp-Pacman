@@ -10,11 +10,14 @@ public :
 	int frames = 0;
 	int speed = 100;
 	int distance = 0;
+	int points = 0;
+	int deaths = 0;
 	char mButton;
 	SDL_Point center = { 8,8 };
 	bool reverse= false;
 	bool collide = false;
 	bool dead;
+	bool won;
 	float angle;
 	int mapX;
 	int mapY;
@@ -36,8 +39,10 @@ public :
 	int getYPos();
 	int getMapX();
 	int getMapy();
+	int getDeaths();
 	bool getPelletHit();
 	bool getDeath(int bx, int by, int px, int py, int ix, int iy, int cx, int cy);
+	bool getWon();
 
 	void Update();
 	void Render();

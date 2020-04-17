@@ -371,7 +371,7 @@ int GameObject::collisonCheck() {
 	int fy = ypos / 32;
 	int i = x / 32;
 	int j = y / 32;
-	std::cout << xpos << ypos << std::endl;
+
 	
 	std::vector<std::vector<int>> map = getMap();
 
@@ -380,26 +380,26 @@ int GameObject::collisonCheck() {
 	}
 	else if (16>map[fy][fx]&&map[fy][fx]>0) {
 		return collide = true;
-
 	}
 	else if (16>map[j][fx]&&map[j][fx]>0) {
 		return collide = true;
-
 	}
 	else if (16>map[fy][i]&&map[fy][i]>0) {
 		return collide = true;
-
 	}
 	else if (map[j][i] == 0) {
 		mapX = i;
 		mapY = j;
 		pelletHit = true;
+		points++;
+		std::cout << points << std::endl;
+		if (points == 378) {
+			won = true;
+		}
 		return collide = false;
-	
-
+		
 	}
 	else if (map[j][i] == 16) {
-	
 		return collide = false;
 	}
 	else {
@@ -422,6 +422,7 @@ int GameObject::getMapX() {
 int GameObject::getMapy() {
 	return mapY;
 }
+
 bool GameObject::getPelletHit() {
 	return pelletHit;
 }
@@ -448,10 +449,23 @@ bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx,
 		(y == iY && x == iX)||
 		(y == cY && x == cX)) {
 		dead = true;
+		deaths++;
+		xpos = 448;
+		ypos = 608;
 	}
+	
 
 	return dead;
 }
+
+int GameObject::getDeaths() {
+	return deaths;
+}
+
+bool GameObject::getWon() {
+	return won;
+}
+
 
 void GameObject::Update() 
 {	

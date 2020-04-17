@@ -25,7 +25,7 @@ std::vector<std::vector<int>> PacmanMap =
 	{6,0,6,0,6,0,7,0,3,5,5,5,13,5,5,5,5,5,9,0,1,2,0,6,0,6},
 	{6,0,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,4,0,6,0,6},
 	{6,0,6,0,3,5,5,5,9,0,8,0,10,5,5,5,5,5,5,5,4,0,0,6,0,6},
-	{6,0,6,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,10,4,0,6},
+	{6,0,6,0,0,0,0,0,0,0,6,0,0,0,16,0,0,0,0,0,0,0,10,4,0,6},
 	{6,0,3,5,5,5,5,5,5,5,13,5,5,5,5,5,5,5,5,5,2,0,0,0,0,6},
 	{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,9,0,8,0,6},
 	{14,5,5,5,5,5,2,0,10,5,5,5,5,5,5,5,5,5,2,0,0,0,0,6,0,6},
@@ -35,7 +35,8 @@ std::vector<std::vector<int>> PacmanMap =
 	{6,0,6,0,0,0,0,0,0,0,8,0,0,0,8,0,0,0,0,0,0,0,0,6,0,6},
 	{6,0,3,5,5,5,9,0,10,5,13,5,5,5,13,9,0,10,5,5,5,5,5,4,0,6},
 	{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
-	{3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4}
+	{3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4},
+	{16,17,18,19,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16}
 };
 
 std::vector<std::vector<int>> getMap() {
@@ -64,6 +65,11 @@ Map::Map()
 	trbCorner = TextureManager::LoadTexture("assets/TopRightBottomCorner.png");
 	allCorner = TextureManager::LoadTexture("assets/AllCorner.png");
 	pellet = TextureManager::LoadTexture("assets/Pellet.png");
+	pacman = TextureManager::LoadTexture("assets/Pacman.png");
+	cross = TextureManager::LoadTexture("assets/X.png");
+	one = TextureManager::LoadTexture("assets/1.png");
+	two = TextureManager::LoadTexture("assets/2.png");
+	three = TextureManager::LoadTexture("assets/3.png");
 
 
 	src.x = 0;
@@ -74,17 +80,20 @@ Map::Map()
 	dest.x = dest.y = 0;
 }
 
-void Map::DrawMap(int mapX,int mapY, bool pelletHit)
+void Map::DrawMap(int mapX,int mapY, bool pelletHit, int deaths)
 {
 	int type = 0;
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 31; i++)
 	{
 		for (int j = 0; j < 26; j++) {
 			type = PacmanMap[i][j];
 			dest.x = j * 32;
 			dest.y = i * 32;
-			if (pelletHit&&i==mapX&&j==mapY) {
+			if (pelletHit&&i==mapY&&j==mapX) {
 				PacmanMap[mapY][mapX] = 16;
+			}
+			if (type == 19 && deaths > 0) {
+				type += deaths;
 			}
 			
 			switch (type)
@@ -137,8 +146,25 @@ void Map::DrawMap(int mapX,int mapY, bool pelletHit)
 				break;
 			case 15:
 				TextureManager::Draw(allCorner, src, dest);
+				break;
 			case 16:
 				TextureManager::Draw(blank, src, dest);
+				break;
+			case 17:
+				TextureManager::Draw(pacman, src, dest);
+				break;
+			case 18:
+				TextureManager::Draw(cross, src, dest);
+				break;
+			case 19:
+				TextureManager::Draw(three, src, dest);
+				break;
+			case 20:
+				TextureManager::Draw(two, src, dest);
+				break;
+			case 21:
+				TextureManager::Draw(one, src, dest);
+
 
 
 

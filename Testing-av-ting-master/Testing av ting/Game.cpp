@@ -38,7 +38,7 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		}
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			std::cout << "Renderer Created" << std::endl;
 		}
 		isRunning = true;
@@ -120,17 +120,20 @@ void Game::update()
 	clyde->Update();
 	
 	if (player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos())) {
-		Game::clean();
+		if (player->getDeaths()==3) {
+			Game::clean();
+		}
 
 	}
-	
-
+	if (player->getWon()) {
+		Game::clean();
+	}
 }
 void Game::render() 
 {
 
 	SDL_RenderClear(renderer);
-	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit());
+	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit(),player->getDeaths());
 	player->Render();
 	blinky->Render();
 	pinky->Render();

@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	int frameTime;
 	//Gameloop
 	game = new Game();
-	game->init("Pacman", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 832, 960, false);
+	game->init("Pacman", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 832, 992, false);
 	while (game->running())
 	{
 
