@@ -5,6 +5,7 @@
 #include "SDL_image.h"
 #include "GameObject.h"
 #include "map.h"
+#include <SDL_mixer.h>
 
 GameObject* player;
 GameObject* blinky;
@@ -40,10 +41,17 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		if (renderer) {
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			std::cout << "Renderer Created" << std::endl;
+			std::cout << "Renderer Created" << std::endl;
+		}
+
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 < 0)) {
+			std::cout << "Error" << std::endl;
 		}
 		isRunning = true;
-		}
-		
+	}
+	
+
+
 	player = new GameObject("assets/PacmanSpriteSheetLoop.png", 448 ,608,6,125);
 
 	blinky = new GameObject("assets/BlinkySpriteSheetRight.png", 32, 32,2,100);
@@ -55,6 +63,8 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	clyde = new GameObject("assets/ClydeSpriteSheetRight.png", 288, 96, 2, 100);
 
 	map = new Map();
+	Mix_Music* intro = Mix_LoadMUS("assets/Intro.mp3");
+	Mix_PlayMusic(intro, 0);
 
 	}
 void Game::eventHandler()

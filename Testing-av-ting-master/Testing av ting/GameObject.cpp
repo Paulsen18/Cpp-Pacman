@@ -2,6 +2,7 @@
 #include "map.h"
 #include "TextureManager.h"
 #include <iostream>
+#include <SDL_mixer.h>
 
 
 
@@ -364,6 +365,7 @@ void GameObject::clydeMove(int x,int y) {
 
 int GameObject::collisonCheck() {
 
+		Mix_Music* chomp = Mix_LoadMUS("assets/Chomp.mp3");
 
 	int x = xpos+31;
 	int y = ypos+31;
@@ -390,6 +392,9 @@ int GameObject::collisonCheck() {
 	else if (map[j][i] == 0) {
 		mapX = i;
 		mapY = j;
+		if (!Mix_PlayingMusic()) {
+			Mix_PlayMusic(chomp, 0);
+		}
 		pelletHit = true;
 		pellets++;
 		points += 50;
@@ -407,6 +412,7 @@ int GameObject::collisonCheck() {
 	else if (map[j][i] == 16) {
 		return collide = false;
 	}
+	
 	else {
 		return 0;
 	}
@@ -456,6 +462,8 @@ bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx,
 		(y == pY && x == pX)||
 		(y == iY && x == iX)||
 		(y == cY && x == cX)) {
+		Mix_Music* death = Mix_LoadMUS("assets/Death.mp3");
+		Mix_PlayMusic(death, 0);
 		dead = true;
 		deaths++;
 		xpos = 448;
