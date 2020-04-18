@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include <vector>
 #include <iostream>
+#include <SDL_mixer.h>
 
 
 std::vector<std::vector<int>> PacmanMap =
@@ -82,6 +83,7 @@ Map::Map()
 
 void Map::DrawMap(int mapX,int mapY, bool pelletHit, int deaths)
 {
+	
 	int type = 0;
 	for (int i = 0; i < 31; i++)
 	{
