@@ -5,7 +5,6 @@
 #include "SDL_image.h"
 #include "GameObject.h"
 #include "map.h"
-#include <SDL_mixer.h>
 
 GameObject* player;
 GameObject* blinky;
@@ -17,7 +16,6 @@ Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
-
 
 Game::~Game() {
 
@@ -43,13 +41,8 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			std::cout << "Renderer Created" << std::endl;
 		}
-		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-			std::cout << "Error" << std::endl;
-		}
 		isRunning = true;
 		}
-	Mix_Music* intro = Mix_LoadMUS("assets/Intro.mp3");
-	Mix_PlayMusic(intro, 0);
 		
 	player = new GameObject("assets/PacmanSpriteSheetLoop.png", 448 ,608,6,125);
 
@@ -66,7 +59,6 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	}
 void Game::eventHandler()
 {
-
 	SDL_PollEvent(&event);
 	switch (event.type) {
 	case SDL_QUIT:
@@ -100,10 +92,12 @@ void Game::eventHandler()
 			break;
 		case SDLK_o:
 			player->move('o');
-		
+			
+			break;
 		default:
 			break;
 		}
+		
 	default:
 		break;
 	}
@@ -127,20 +121,22 @@ void Game::update()
 	
 	if (player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos())) {
 		if (player->getDeaths()==3) {
+			std::cout << "You Died!" << std::endl;
 			Game::clean();
 		}
 
 	}
-	if (player->getWon()) {
+	if (player->getWon()&&player->getWonSecond()) {
 		Game::clean();
+		std::cout << "You Won!" << std::endl;
+		
 	}
 }
 void Game::render() 
 {
 
 	SDL_RenderClear(renderer);
-	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit(),player->getDeaths());
-	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit(),player->getDeaths());
+	map->DrawMap(player->getMapX(),player->getMapy(),player->getPelletHit(),player->getDeaths(),player->getPoints(),player->getWon());
 	player->Render();
 	blinky->Render();
 	pinky->Render();
@@ -154,7 +150,6 @@ void Game::clean()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
-	Mix_Quit();
 	SDL_Quit();
 	std::cout << "Game cleaned" << std::endl;
 }

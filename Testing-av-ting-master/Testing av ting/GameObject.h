@@ -10,6 +10,7 @@ public :
 	int frames = 0;
 	int speed = 100;
 	int distance = 0;
+	int pellets = 0;
 	int points = 0;
 	int deaths = 0;
 	char mButton;
@@ -22,6 +23,8 @@ public :
 	int mapX;
 	int mapY;
 	bool pelletHit = false;
+	bool newLevel = false;
+	bool wonSecond = false;
 
 	GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed);
 	~GameObject();
@@ -40,9 +43,11 @@ public :
 	int getMapX();
 	int getMapy();
 	int getDeaths();
+	int getPoints();
 	bool getPelletHit();
 	bool getDeath(int bx, int by, int px, int py, int ix, int iy, int cx, int cy);
 	bool getWon();
+	bool getWonSecond();
 
 	void Update();
 	void Render();

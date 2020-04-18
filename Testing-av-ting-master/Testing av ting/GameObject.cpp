@@ -2,7 +2,6 @@
 #include "map.h"
 #include "TextureManager.h"
 #include <iostream>
-#include <SDL_mixer.h>
 
 
 
@@ -42,7 +41,7 @@ void GameObject::move(char button) {
 		ypos = ty * 32;
 	}
 	mButton = button;
-	std::vector<std::vector<int>> map = getMap();
+	std::vector<std::vector<int>> map = getMap(won);
 	if(!collide){
 	switch (button) {
 	case  'w':
@@ -365,7 +364,6 @@ void GameObject::clydeMove(int x,int y) {
 
 int GameObject::collisonCheck() {
 
-	Mix_Music* bgm = Mix_LoadMUS("assets/Chomp.mp3");
 
 	int x = xpos+31;
 	int y = ypos+31;
@@ -375,7 +373,7 @@ int GameObject::collisonCheck() {
 	int j = y / 32;
 
 	
-	std::vector<std::vector<int>> map = getMap();
+	std::vector<std::vector<int>> map = getMap(won);
 
 	if (16>map[j][i]&&map[j][i]>0) {
 		return collide = true;
@@ -393,13 +391,15 @@ int GameObject::collisonCheck() {
 		mapX = i;
 		mapY = j;
 		pelletHit = true;
-		points++;
-		std::cout << points << std::endl;
-		if (!Mix_PlayingMusic()) {
-			Mix_PlayMusic(bgm, 0);
+		pellets++;
+		points += 50;
+		std::cout << pellets << std::endl;
+		if (pellets == 378) {
+			won = true;	
 		}
-		if (points == 378) {
-			won = true;
+		if (won && pellets == 755) {
+				wonSecond = true;
+				
 		}
 		return collide = false;
 		
@@ -407,7 +407,6 @@ int GameObject::collisonCheck() {
 	else if (map[j][i] == 16) {
 		return collide = false;
 	}
-	
 	else {
 		return 0;
 	}
@@ -428,6 +427,9 @@ int GameObject::getMapX() {
 int GameObject::getMapy() {
 	return mapY;
 }
+int GameObject::getPoints() {
+	return points;
+}
 
 bool GameObject::getPelletHit() {
 	return pelletHit;
@@ -436,8 +438,6 @@ bool GameObject::getPelletHit() {
 
 
 bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx, int cy) {
-	Mix_Music* death = Mix_LoadMUS("assets/Death.mp3");
-
 	dead = false;
 	int x = xpos / 32;
 	int y = ypos /32;
@@ -451,12 +451,11 @@ bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx,
 	int cY = cy / 32;
 	
 
-	std::vector<std::vector<int>> map = getMap();
+	std::vector<std::vector<int>> map = getMap(won);
 	if ((y == bY && x == bX)||
 		(y == pY && x == pX)||
 		(y == iY && x == iX)||
 		(y == cY && x == cX)) {
-		Mix_PlayMusic(death, 0);
 		dead = true;
 		deaths++;
 		xpos = 448;
@@ -473,6 +472,9 @@ int GameObject::getDeaths() {
 
 bool GameObject::getWon() {
 	return won;
+}
+bool GameObject::getWonSecond() {
+	return wonSecond;
 }
 
 
@@ -492,6 +494,11 @@ void GameObject::Update()
 	destRect.y = ypos;
 	destRect.w = srcRect.w;
 	destRect.h = srcRect.h;	
+	if (won&&!newLevel) {
+		xpos = 448;
+		ypos = 608;
+		newLevel = true;
+	}
 }
 
 void GameObject::Render() 

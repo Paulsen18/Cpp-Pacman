@@ -1,14 +1,15 @@
 #pragma once
 #include "Game.h"
 #include <vector>
-std::vector<std::vector<int>> getMap();
+std::vector<std::vector<int>> getMap(bool won);
 class Map
 {
 public:
 	Map();
 	~Map();
 
-	void DrawMap(int mapX, int mapY, bool pelletHit,int deaths);
+	void DrawMap(int mapX, int mapY, bool pelletHit, int deaths, int points, bool won);
+	int scoreTypeConverter(int points);
 
 	
 private:
@@ -34,9 +35,21 @@ private:
 	SDL_Texture* pellet;
 	SDL_Texture* pacman;
 	SDL_Texture* cross;
+	SDL_Texture* zero;
 	SDL_Texture* one;
 	SDL_Texture* two;
 	SDL_Texture* three;
+	SDL_Texture* four;
+	SDL_Texture* five;
+	SDL_Texture* six;
+	SDL_Texture* seven;
+	SDL_Texture* eight;
+	SDL_Texture* nine;
+	SDL_Texture* letterS;
+	SDL_Texture* letterC;
+	SDL_Texture* letterO;
+	SDL_Texture* letterR;
+	SDL_Texture* letterE;
 
 
 
