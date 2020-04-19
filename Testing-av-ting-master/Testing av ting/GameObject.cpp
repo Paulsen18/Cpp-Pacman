@@ -102,18 +102,6 @@ void GameObject::move(char button) {
 		ypos = y;
 	}
 
-	if (ypos > 896) {
-		ypos = 896;
-	}
-	else if (ypos < 32) {
-		ypos = 32;
-	}
-	if (xpos > 768) {
-		xpos = 768;
-	}
-	else if (xpos < 32) {
-		xpos = 32;
-	}
 }
 
 
@@ -442,10 +430,10 @@ int GameObject::collisonCheck() {
 		pellets++;
 		points += 50;
 		
-		if (pellets == 100) {
+		if (pellets == 378) {
 			won = true;	
 		}
-		if (won && pellets == 758) {
+		if (won && pellets == 755) {
 			std::cout << pellets << std::endl;
 				wonSecond = true;
 				
@@ -463,10 +451,10 @@ int GameObject::collisonCheck() {
 		pellets++;
 		points += 250;
 		
-		if (pellets == 100) {
+		if (pellets == 378) {
 			won = true;
 		}
-		if (won && pellets == 758) {
+		if (won && pellets == 755) {
 			wonSecond = true;
 
 		}
