@@ -30,9 +30,7 @@ void GameObject::move(char button) {
 	int ty = (ypos+16)/32;
 	
 	
-	if (dead) {
-		objTexture = TextureManager::LoadTexture("assets/PacmanSpriteSheetDeath.png");	
-	}
+	
 	if (distance == 32) {
 		distance = 0;
 	}
@@ -119,195 +117,226 @@ void GameObject::move(char button) {
 }
 
 
-void GameObject::blinkyMove(int x, int y) {
+void GameObject::blinkyMove(int x, int y, bool p) {
 	
+	if (p) {
+		objTexture = TextureManager::LoadTexture("assets/ScaredGhostSpriteSheet.png");
+		timer = 2000;
+
+	}
+	else if (!p) {
+
+		if (!reverse && xpos < 768 && ypos == 32) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (!reverse && ypos < 896) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetDown.png");
+			ypos += 4;
+
+		}
+		else if (!reverse && xpos > 32 && ypos == 896) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetLeft.png");
+			xpos -= 4;
+
+		}
+		else if (xpos == 32 && ypos == 896 && !reverse) {
+			reverse = true;
+		}
+		else if (reverse && ypos == 896 && xpos < 768) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && ypos > 32 && xpos == 768) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && ypos == 32 && xpos > 32) {
+			objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && ypos == 32 && xpos == 32) {
+			reverse = false;
+		}
+	}
+}
+void GameObject::pinkyMove(int x, int y,bool p) {
+
+	if (p) {
+		objTexture = TextureManager::LoadTexture("assets/ScaredGhostSpriteSheet.png");
+		timer = 2000;
+
+	}
+	else if (!p) {
+
+		if (!reverse && xpos > 480 && ypos <= 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (!reverse && xpos == 480 && ypos > 800) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (!reverse && xpos > 416 && ypos == 800) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (!reverse && xpos == 416 && ypos < 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (!reverse && xpos > 352 && ypos == 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (!reverse && xpos == 352 && ypos > 800) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (!reverse && xpos > 288 && ypos == 800) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (!reverse && xpos == 288 && ypos < 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (!reverse && xpos > 96 && ypos == 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (!reverse && xpos == 96 && ypos == 832) {
+			reverse = true;
+		}
+		else if (reverse && xpos == 96 && ypos > 736) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos < 160 && ypos == 736) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && xpos == 160 && ypos < 768) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (reverse && xpos < 224 && ypos == 768) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && xpos == 224 && ypos > 736) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos < 544 && ypos == 736) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && xpos == 544 && ypos < 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (reverse && xpos < 704 && ypos == 832) {
+			objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && xpos == 704 && ypos == 832) {
+			reverse = false;
+		}
+	}
+}
+
+void GameObject::inkyMove(int x, int y,bool p) {
+
+	if (p) {
+		objTexture = TextureManager::LoadTexture("assets/ScaredGhostSpriteSheet.png");
+		timer = 2000;
+
+	}
+	else if (!p) {
+
+		if (!reverse && xpos == 32 && ypos < 672) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (!reverse && xpos < 608 && ypos == 672) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (!reverse && xpos == 608 && ypos < 704) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (!reverse && xpos < 704 && ypos == 704) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (xpos == 704 && ypos > 640) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
+			ypos -= 4;
+			reverse = true;
+		}
+		else if (reverse && xpos > 672 && ypos == 640) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && xpos == 672 && ypos > 576) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos < 704 && ypos == 576) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
+			xpos += 4;
+		}
+		else if (reverse && xpos == 704 && ypos > 480) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos > 576 && ypos == 480) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && xpos == 576 && ypos > 416) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos > 480 && ypos == 416) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && xpos == 480 && ypos > 352) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
+			ypos -= 4;
+		}
+		else if (reverse && xpos > 288 && ypos == 352) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && xpos == 288 && ypos < 384) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
+			ypos += 4;
+		}
+		else if (reverse && xpos > 32 && ypos == 384) {
+			objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
+			xpos -= 4;
+		}
+		else if (reverse && xpos == 32 && ypos == 384) {
+			reverse = false;
+		}
+	}
+
+
+}
+
+void GameObject::clydeMove(int x,int y, bool p) {
+
+
+	if (p) {
+		objTexture = TextureManager::LoadTexture("assets/ScaredGhostSpriteSheet.png");
+		timer = 2000;
+
+	}else if(!p){
 	
-
-	if (!reverse && xpos < 768 && ypos==32) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
-		xpos+=4;
-	}
-	else if (!reverse && ypos < 896) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetDown.png");
-		ypos += 4;
-		
-	} else if (!reverse && xpos > 32 && ypos==896) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetLeft.png");
-		xpos -= 4;
-		
-	}
-	else if (xpos == 32 && ypos == 896 && !reverse) {
-		reverse = true;
-	}
-	else if (reverse && ypos==896 && xpos<768) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && ypos > 32 && xpos==768) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && ypos == 32 && xpos>32) {
-		objTexture = TextureManager::LoadTexture("assets/BlinkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && ypos == 32 && xpos == 32) {
-		reverse = false;
-	}
-}
-void GameObject::pinkyMove(int x, int y) {
-	if (!reverse && xpos > 480 && ypos <= 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (!reverse && xpos == 480 &&ypos > 800) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (!reverse && xpos > 416 && ypos == 800) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (!reverse && xpos == 416 && ypos < 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (!reverse && xpos > 352 && ypos == 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (!reverse && xpos == 352 && ypos > 800) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (!reverse && xpos > 288 && ypos == 800) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
-		xpos -= 4; 
-	}
-	else if (!reverse && xpos == 288 && ypos < 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (!reverse && xpos > 96 && ypos == 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (!reverse && xpos == 96 && ypos == 832) {
-		reverse = true;
-	}
-	else if (reverse && xpos == 96 && ypos > 736) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos < 160 && ypos == 736) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && xpos == 160 && ypos < 768) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (reverse && xpos <224 && ypos==768) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && xpos == 224 && ypos > 736) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos < 544 && ypos == 736) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && xpos == 544 && ypos < 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (reverse && xpos < 704 && ypos == 832) {
-		objTexture = TextureManager::LoadTexture("assets/PinkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && xpos == 704 && ypos == 832) {
-		reverse = false;
-	}
-}
-
-void GameObject::inkyMove(int x, int y) {
-	if (!reverse && xpos == 32 && ypos < 672) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (!reverse && xpos < 608 && ypos == 672) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (!reverse && xpos == 608 && ypos < 704) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (!reverse && xpos < 704 && ypos == 704) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (xpos == 704 && ypos > 640) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
-		ypos -= 4;
-		reverse = true;
-	}
-	else if (reverse && xpos > 672 && ypos == 640) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && xpos == 672 && ypos > 576) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos < 704 && ypos == 576) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetRight.png");
-		xpos += 4;
-	}
-	else if (reverse && xpos == 704 && ypos > 480) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos > 576 && ypos == 480) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && xpos == 576 && ypos > 416) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos > 480 && ypos == 416) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && xpos == 480 && ypos > 352) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetUp.png");
-		ypos -= 4;
-	}
-	else if (reverse && xpos > 288 && ypos == 352) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && xpos == 288 && ypos < 384) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetDown.png");
-		ypos += 4;
-	}
-	else if (reverse && xpos > 32 && ypos == 384) {
-		objTexture = TextureManager::LoadTexture("assets/InkySpriteSheetLeft.png");
-		xpos -= 4;
-	}
-	else if (reverse && xpos == 32 && ypos == 384) {
-		reverse = false;
-	}
-
-
-}
-
-void GameObject::clydeMove(int x,int y) {
-
-
 	if (xpos < 704 && ypos == 96) {
 		reverse = false;
 		objTexture = TextureManager::LoadTexture("assets/ClydeSpriteSheetRight.png");
@@ -361,6 +390,7 @@ void GameObject::clydeMove(int x,int y) {
 		objTexture = TextureManager::LoadTexture("assets/ClydeSpriteSheetUp.png");
 		ypos -= 4;
 	}
+	}
 }
 
 int GameObject::collisonCheck() {
@@ -373,6 +403,19 @@ int GameObject::collisonCheck() {
 	int fy = ypos / 32;
 	int i = x / 32;
 	int j = y / 32;
+	if (poweredUp&&timer==0) {
+		
+		timer = 500;
+	}else if (poweredUp && timer > 1) {
+		std::cout << timer << std::endl;
+		timer--;
+	}
+	else if(poweredUp&& timer ==1){
+		timer--;
+		poweredUp = false;
+
+	}
+	
 
 	
 	std::vector<std::vector<int>> map = getMap(won);
@@ -398,16 +441,38 @@ int GameObject::collisonCheck() {
 		pelletHit = true;
 		pellets++;
 		points += 50;
-		std::cout << pellets << std::endl;
-		if (pellets == 378) {
+		
+		if (pellets == 100) {
 			won = true;	
 		}
-		if (won && pellets == 755) {
+		if (won && pellets == 758) {
+			std::cout << pellets << std::endl;
 				wonSecond = true;
 				
 		}
 		return collide = false;
 		
+	}
+	else if (map[j][i] == 34) {
+		mapX = i;
+		mapY = j;
+		if (!Mix_PlayingMusic()) {
+			Mix_PlayMusic(chomp, 0);
+		}
+		pelletHit = true;
+		pellets++;
+		points += 250;
+		
+		if (pellets == 100) {
+			won = true;
+		}
+		if (won && pellets == 758) {
+			wonSecond = true;
+
+		}
+		poweredUp = true;
+		std::cout << poweredUp << std::endl;
+		return collide = false;
 	}
 	else if (map[j][i] == 16) {
 		return collide = false;
@@ -416,15 +481,23 @@ int GameObject::collisonCheck() {
 	else {
 		return 0;
 	}
+
 	
 }
 
 int GameObject::getXPos() {
 	return xpos;
 }
+void GameObject::setXpos(int x) {
+	xpos = x;
+}
 
 int GameObject::getYPos() {
 	return ypos;
+}
+
+void GameObject::setYpos(int y){
+	ypos = y;
 }
 
 int GameObject::getMapX() {
@@ -441,10 +514,13 @@ bool GameObject::getPelletHit() {
 	return pelletHit;
 }
 
+bool GameObject::getPoweredUp() {
+	return poweredUp;
+}
 
 
-bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx, int cy) {
-	dead = false;
+int GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx, int cy, bool pu) {
+	deadState = 0;
 	int x = xpos / 32;
 	int y = ypos /32;
 	int bX = bx / 32;
@@ -458,20 +534,35 @@ bool GameObject::getDeath(int bx,int by, int px, int py, int ix, int iy, int cx,
 	
 
 	std::vector<std::vector<int>> map = getMap(won);
-	if ((y == bY && x == bX)||
+	if (pu && (y == bY && x == bX)) {
+		deadState = 1;
+		points += 750;
+	}
+	else if (pu&&(y == pY && x == pX)) {
+		deadState = 2;
+		points += 750;
+
+	}
+	else if (pu && (y == iY && x == iX)) {
+		deadState = 3;
+		points += 750;
+	}else if(pu&&(y == cY && x == cX)) {
+		deadState = 4;
+		points += 750;
+	}else if (!pu&&(y == bY && x == bX)||
 		(y == pY && x == pX)||
 		(y == iY && x == iX)||
 		(y == cY && x == cX)) {
 		Mix_Music* death = Mix_LoadMUS("assets/Death.mp3");
 		Mix_PlayMusic(death, 0);
-		dead = true;
+		deadState = 5;
 		deaths++;
 		xpos = 448;
 		ypos = 608;
 	}
 	
 
-	return dead;
+	return deadState;
 }
 
 int GameObject::getDeaths() {
@@ -484,6 +575,8 @@ bool GameObject::getWon() {
 bool GameObject::getWonSecond() {
 	return wonSecond;
 }
+
+
 
 
 void GameObject::Update() 

@@ -13,11 +13,13 @@ public :
 	int pellets = 0;
 	int points = 0;
 	int deaths = 0;
+	int ghostSpeed = 4;
+	int timer;
 	char mButton;
 	SDL_Point center = { 8,8 };
 	bool reverse= false;
 	bool collide = false;
-	bool dead;
+	int deadState;
 	bool won;
 	float angle;
 	int mapX;
@@ -25,27 +27,36 @@ public :
 	bool pelletHit = false;
 	bool newLevel = false;
 	bool wonSecond = false;
+	bool poweredUp = false;
+	bool poweredUpTimerCheck = false;
+
+
 
 	GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed);
 	~GameObject();
 
 	void move(char button);
 	
-	void blinkyMove(int x,int y);
-	void pinkyMove(int x, int y);
-	void inkyMove(int x, int y);
-	void clydeMove(int x, int y);
+	void blinkyMove(int x,int y, bool p);
+	void pinkyMove(int x, int y, bool p);
+	void inkyMove(int x, int y, bool p);
+	void clydeMove(int x, int y, bool p);
 
 	int collisonCheck();
+
+	int timerCounter();
 	
 	int getXPos();
 	int getYPos();
+	void setXpos(int x);
+	void setYpos(int y);
 	int getMapX();
 	int getMapy();
 	int getDeaths();
 	int getPoints();
 	bool getPelletHit();
-	bool getDeath(int bx, int by, int px, int py, int ix, int iy, int cx, int cy);
+	bool getPoweredUp();
+	int getDeath(int bx, int by, int px, int py, int ix, int iy, int cx, int cy,bool pu);
 	bool getWon();
 	bool getWonSecond();
 

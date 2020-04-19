@@ -69,6 +69,8 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 	}
 void Game::eventHandler()
 {
+	
+
 	SDL_PollEvent(&event);
 	switch (event.type) {
 	case SDL_QUIT:
@@ -117,24 +119,75 @@ void Game::eventHandler()
 
 void Game::update()
 {
-	
-	
+	if (player->getWon()) {
+		std::cout << "won = true" << std::endl;
+		if (blinkyDeath) {
+			std::cout << "blinkydeath" << std::endl;
+			blinky->setXpos(32);
+			blinky->setYpos(32);
+			blinkyDeath = false;
+		}
+		if (pinkyDeath) {
+			std::cout << "pinkydeath" << std::endl;
+			pinky->setXpos(704);
+			pinky->setYpos(832);
+			pinkyDeath = false;
+		}
+		if (inkyDeath) {
+			std::cout << "inkydeath" << std::endl;
+			inky->setXpos(32);
+			inky->setYpos(384);
+			inkyDeath = false;
+		}
+		if (clydeDeath) {
+			std::cout << "clydedeath" << std::endl;
+			clyde->setXpos(288);
+			clyde->setYpos(96);
+			clydeDeath = false;
+		}
+	}
+
+
 	player->Update();
-	blinky->blinkyMove(player->getXPos(),player->getYPos());
+	blinky->blinkyMove(player->getXPos(),player->getYPos(),player->getPoweredUp());
 	blinky->Update();
-	pinky->pinkyMove(player->getXPos(), player->getYPos());
+	pinky->pinkyMove(player->getXPos(), player->getYPos(),player->getPoweredUp());
 	pinky->Update();
-	inky->inkyMove(player->getXPos(), player->getYPos());
+	inky->inkyMove(player->getXPos(), player->getYPos(),player->getPoweredUp());
 	inky->Update();
-	clyde->clydeMove(player->getXPos(), player->getYPos());
+	clyde->clydeMove(player->getXPos(), player->getYPos(),player->getPoweredUp());
 	clyde->Update();
-	
-	if (player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos())) {
+	deadState = player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos(), player->getPoweredUp());
+	if (deadState==5) {
 		if (player->getDeaths()==3) {
 			std::cout << "You Died!" << std::endl;
 			Game::clean();
 		}
 
+	}
+	else if (deadState == 1) {
+		std::cout<<"deadstate = 1"<<std::endl;
+		blinky->setXpos(1000);
+		blinky->setYpos(1000);
+		blinkyDeath = true;
+	}
+	else if (deadState == 2) {
+		std::cout << "deadstate = 2" << std::endl;
+		pinky->setXpos(1000);
+		pinky->setYpos(1000);
+		pinkyDeath = true;
+	}
+	else if (deadState == 3) {
+		std::cout << "deadstate = 3" << std::endl;
+		inky->setXpos(1000);
+		inky->setYpos(1000);
+		inkyDeath = true;
+	}
+	else if (deadState == 4) {
+		std::cout << "deadstate = 4" << std::endl;
+		clyde->setXpos(1000);
+		clyde->setYpos(1000);
+		clydeDeath = true;
 	}
 	if (player->getWon()&&player->getWonSecond()) {
 		Game::clean();

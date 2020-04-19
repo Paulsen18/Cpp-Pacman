@@ -5,7 +5,8 @@
 class Game
 {
 public:
-	bool playerDeath;
+	bool playerDeath, blinkyDeath, pinkyDeath, inkyDeath, clydeDeath;
+	int deadState;
 
 	Game();
 	~Game();

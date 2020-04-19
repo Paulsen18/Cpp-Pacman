@@ -50,6 +50,7 @@ private:
 	SDL_Texture* letterO;
 	SDL_Texture* letterR;
 	SDL_Texture* letterE;
+	SDL_Texture* bigPellet;
 
 
 
