@@ -6,7 +6,6 @@ class Map
 {
 public:
 	Map();
-	~Map();
 
 	void DrawMap(int mapX, int mapY, bool pelletHit, int deaths, int points, bool won);
 	int scoreTypeConverter(int points);

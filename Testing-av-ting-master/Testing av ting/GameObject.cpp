@@ -8,7 +8,6 @@
 
 bool dead;
 
-
 GameObject::GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed) {
 	objTexture = TextureManager::LoadTexture(texturesheet);
 	xpos = x;
@@ -17,8 +16,6 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int nFrames, int 
 	speed = mSpeed;
 	animated = true;
 }
-
-
 
 void GameObject::move(char button) {
 	
@@ -391,14 +388,11 @@ int GameObject::collisonCheck() {
 	int fy = ypos / 32;
 	int i = x / 32;
 	int j = y / 32;
-	if (poweredUp&&timer==0) {
-		
-		timer = 500;
-	}else if (poweredUp && timer > 1) {
+	if (poweredUp && timer > 1) {
 		std::cout << timer << std::endl;
 		timer--;
 	}
-	else if(poweredUp&& timer ==1){
+	else if (poweredUp && timer == 1) {
 		timer--;
 		poweredUp = false;
 
@@ -429,11 +423,12 @@ int GameObject::collisonCheck() {
 		pelletHit = true;
 		pellets++;
 		points += 50;
+		std::cout << pellets << std::endl;
 		
 		if (pellets == 378) {
 			won = true;	
 		}
-		if (won && pellets == 755) {
+		if (won && pellets == 760) {
 			std::cout << pellets << std::endl;
 				wonSecond = true;
 				
@@ -450,11 +445,14 @@ int GameObject::collisonCheck() {
 		pelletHit = true;
 		pellets++;
 		points += 250;
+		timer = 500;
+		std::cout << pellets << std::endl;
+
 		
 		if (pellets == 378) {
 			won = true;
 		}
-		if (won && pellets == 755) {
+		if (won && pellets == 760) {
 			wonSecond = true;
 
 		}
@@ -592,5 +590,5 @@ void GameObject::Update()
 
 void GameObject::Render() 
 {
-	SDL_RenderCopyEx(Game::renderer, objTexture, &srcRect, &destRect, angle, &center, SDL_FLIP_NONE);
+	SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

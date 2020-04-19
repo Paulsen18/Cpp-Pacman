@@ -18,9 +18,7 @@ Map* map;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
-Game::~Game() {
 
-}
 Game::Game() {
 
 }
@@ -150,8 +148,7 @@ void Game::update()
 	deadState = player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos(), player->getPoweredUp());
 	if (deadState==5) {
 		if (player->getDeaths()==3) {
-			std::cout << "You Died!" << std::endl;
-			Game::clean();
+			
 		}
 	}
 	else if (deadState == 1) {

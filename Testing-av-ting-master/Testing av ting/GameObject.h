@@ -21,19 +21,14 @@ public :
 	bool collide = false;
 	int deadState;
 	bool won;
-	float angle;
 	int mapX;
 	int mapY;
 	bool pelletHit = false;
 	bool newLevel = false;
 	bool wonSecond = false;
 	bool poweredUp = false;
-	bool poweredUpTimerCheck = false;
-
-
 
 	GameObject(const char* texturesheet, int x, int y, int nFrames, int mSpeed);
-	~GameObject();
 
 	void move(char button);
 	
@@ -43,8 +38,6 @@ public :
 	void clydeMove(int x, int y, bool p);
 
 	int collisonCheck();
-
-	int timerCounter();
 	
 	int getXPos();
 	int getYPos();
@@ -62,7 +55,6 @@ public :
 
 	void Update();
 	void Render();
-	
 	
 private:
 
