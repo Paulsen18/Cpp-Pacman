@@ -389,7 +389,6 @@ int GameObject::collisonCheck() {
 	int i = x / 32;
 	int j = y / 32;
 	if (poweredUp && timer > 1) {
-		std::cout << timer << std::endl;
 		timer--;
 	}
 	else if (poweredUp && timer == 1) {
@@ -423,13 +422,10 @@ int GameObject::collisonCheck() {
 		pelletHit = true;
 		pellets++;
 		points += 50;
-		std::cout << pellets << std::endl;
-		
 		if (pellets == 378) {
 			won = true;	
 		}
 		if (won && pellets == 758) {
-			std::cout << pellets << std::endl;
 				wonSecond = true;
 				
 		}
@@ -446,18 +442,14 @@ int GameObject::collisonCheck() {
 		pellets++;
 		points += 250;
 		timer = 500;
-		std::cout << pellets << std::endl;
 
-		
 		if (pellets == 378) {
 			won = true;
 		}
 		if (won && pellets == 758) {
 			wonSecond = true;
-
 		}
 		poweredUp = true;
-		std::cout << poweredUp << std::endl;
 		return collide = false;
 	}
 	else if (map[j][i] == 16) {

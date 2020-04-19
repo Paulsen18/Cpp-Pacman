@@ -39,7 +39,6 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
 		if (renderer) {
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			std::cout << "Renderer Created" << std::endl;
-			std::cout << "Renderer Created" << std::endl;
 		}
 
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 < 0)) {
@@ -148,7 +147,8 @@ void Game::update()
 	deadState = player->getDeath(blinky->getXPos(), blinky->getYPos(), pinky->getXPos(), pinky->getYPos(), inky->getXPos(), inky->getYPos(), clyde->getXPos(), clyde->getYPos(), player->getPoweredUp());
 	if (deadState==5) {
 		if (player->getDeaths()==3) {
-			
+			std::cout << "You lose!" << std::endl;
+			Game::clean();
 		}
 	}
 	else if (deadState == 1) {
@@ -180,8 +180,9 @@ void Game::update()
 		}
 	}
 	if (player->getWon()&&player->getWonSecond()) {
-		Game::clean();
 		std::cout << "You Won!" << std::endl;
+		Game::clean();
+		
 		
 	}
 }
