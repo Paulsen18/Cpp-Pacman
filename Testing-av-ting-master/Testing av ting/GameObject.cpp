@@ -428,7 +428,7 @@ int GameObject::collisonCheck() {
 		if (pellets == 378) {
 			won = true;	
 		}
-		if (won && pellets == 760) {
+		if (won && pellets == 758) {
 			std::cout << pellets << std::endl;
 				wonSecond = true;
 				
@@ -452,7 +452,7 @@ int GameObject::collisonCheck() {
 		if (pellets == 378) {
 			won = true;
 		}
-		if (won && pellets == 760) {
+		if (won && pellets == 758) {
 			wonSecond = true;
 
 		}

@@ -23,6 +23,7 @@
     <ProjectGuid>{1A5705C5-492A-4297-8014-60556EEA2049}</ProjectGuid>
     <RootNamespace>Testingavting</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Pacman</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
